@@ -2,13 +2,13 @@
 
 let
   nixpkgs = import <nixpkgs> {};
-  rustpkgs = import ./nixpkgs-mozilla/rust-overlay.nix nixpkgs {
+  rustpkgs = import ( builtins.toPath "${rust_overlay}/rust-overlay.nix" ) nixpkgs {
     lib = nixpkgs.lib;
   };
   jobs = {
     ruma =
       nixpkgs.stdenv.mkDerivation rec {
-        name = "ruma-alpha";
+        name = "ruma";
         buildInputs = [
           nixpkgs.libsodium
           nixpkgs.postgresql.lib
