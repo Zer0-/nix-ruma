@@ -1,9 +1,11 @@
-{ rust_overlay, ruma_src }:
+{ rust_overlay, ruma_src, rust_manifests ? import ./nixpkgs-mozilla/lib/loadManifests.nix }:
 
 let
   nixpkgs = import <nixpkgs> {};
-  rustpkgs = import ( builtins.toPath "${rust_overlay}/rust-overlay.nix" ) nixpkgs {
-    lib = nixpkgs.lib;
+  rustpkgs = import ( builtins.toPath "${rust_overlay}/rust-overlay.nix" ) {
+    self = nixpkgs;
+    super = { lib = nixpkgs.lib; };
+    manifests = rust_manifests;
   };
   jobs = {
     ruma =
@@ -17,14 +19,6 @@ let
           nixpkgs.perl
           rustpkgs.rustChannels.nightly.rust
         ];
-        /*
-        src = nixpkgs.fetchgit {
-          url = "https://github.com/ruma/ruma.git";
-          #rev = "8eda5e5006d9162be1d0fcac0404092be5ec0277";
-          #sha256 = "00qn7in3h7wwm1s79qyjnfbhjhpclbnhq7g0kphkgf7p6kvy6phy";
-          sha256 = "14ik2rg30xgpjw4bxqzz728bx915pl1d24zpmvl3zn18301i03iy";
-        };
-        */
         src = ruma_src;
         patches = [ ./patches/update.patch ];
         SSL_CERT_FILE = "${nixpkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
