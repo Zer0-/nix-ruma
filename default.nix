@@ -1,12 +1,13 @@
-{ rust_overlay, ruma_src, rust_manifests ? import ./nixpkgs-mozilla/lib/loadManifests.nix }:
+{ rust_overlay, ruma_src, rust_manifests_repo }:
 
 let
   nixpkgs = import <nixpkgs> {};
-  rustpkgs = import ( builtins.toPath "${rust_overlay}/rust-overlay.nix" ) {
-    self = nixpkgs;
-    super = { lib = nixpkgs.lib; };
-    manifests = rust_manifests;
-  };
+  rust_channels = [ "nightly" "beta" "stable" ];
+  rust_manifests =
+    nixpkgs.lib.attrsets.genAttrs rust_channels (n:
+      builtins.toPath "${rust_manifests_repo}/manifests/${n}.toml");
+  rustpkgs = import ( builtins.toPath "${rust_overlay}/rust-overlay.nix" )
+    nixpkgs  { lib = nixpkgs.lib; manifests = rust_manifests; }; 
   jobs = {
     ruma =
       nixpkgs.stdenv.mkDerivation rec {
