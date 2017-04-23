@@ -1,3 +1,6 @@
 [submodule "nixpkgs-mozilla"]
 	path = nixpkgs-mozilla
 	url = https://github.com/Zer0-/nixpkgs-mozilla.git
+[submodule "rust_manifests"]
+	path = rust_manifests
+	url = https://github.com/Zer0-/rust_manifests.git
