@@ -1,13 +1,7 @@
-{ rust_overlay, ruma_src, rust_manifests_repo }:
+{ ruma_src, rust_nightly }:
 
 let
   nixpkgs = import <nixpkgs> {};
-  rust_channels = [ "nightly" "beta" "stable" ];
-  rust_manifests =
-    nixpkgs.lib.attrsets.genAttrs rust_channels (n:
-      builtins.toPath "${rust_manifests_repo}/manifests/${n}.toml");
-  rustpkgs = import ( builtins.toPath "${rust_overlay}/rust-overlay.nix" )
-    nixpkgs  { lib = nixpkgs.lib; manifests = rust_manifests; }; 
   jobs = {
     ruma =
       nixpkgs.stdenv.mkDerivation rec {
@@ -18,7 +12,7 @@ let
           nixpkgs.openssl
           nixpkgs.clang
           nixpkgs.perl
-          rustpkgs.rustChannels.nightly.rust
+          rust_nightly
         ];
         src = ruma_src;
         SSL_CERT_FILE = "${nixpkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
