@@ -21,7 +21,6 @@ let
           rustpkgs.rustChannels.nightly.rust
         ];
         src = ruma_src;
-        patches = [ ./patches/update.patch ];
         SSL_CERT_FILE = "${nixpkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
         SODIUM_LIB_DIR = "${nixpkgs.libsodium}";
         PQ_LIB_DIR = "${nixpkgs.postgresql.lib}/include";
