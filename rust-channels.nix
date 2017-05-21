@@ -5,7 +5,7 @@ let
   rust_channels = [ "nightly" "beta" "stable" ];
   rust_manifests =
     nixpkgs.lib.attrsets.genAttrs rust_channels (n:
-      builtins.toPath "${rust_manifests_repo}/manifests/${n}.toml");
+      builtins.toPath "${rust_manifests_repo}/manifests/${n}.json");
   rustpkgs = import ( builtins.toPath "${rust_overlay}/rust-overlay.nix" )
     nixpkgs  { lib = nixpkgs.lib; manifests = rust_manifests; }; 
 
