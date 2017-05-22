@@ -12,7 +12,7 @@ let
           nixpkgs.openssl
           nixpkgs.clang
           nixpkgs.perl
-          rust_nightly
+          #rust_nightly
         ];
         src = ruma_src;
         SSL_CERT_FILE = "${nixpkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
