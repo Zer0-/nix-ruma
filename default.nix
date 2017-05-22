@@ -3,7 +3,7 @@
 let
   nixpkgs = import <nixpkgs> {};
   jobs = {
-    build_ruma =
+    ruma =
       nixpkgs.stdenv.mkDerivation {
         name = "ruma";
         buildInputs = [
