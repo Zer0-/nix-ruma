@@ -4,7 +4,7 @@ let
   nixpkgs = import <nixpkgs> {};
   jobs = {
     ruma =
-      nixpkgs.stdenv.mkDerivation rec {
+      nixpkgs.stdenv.mkDerivation {
         name = "ruma";
         buildInputs = [
           nixpkgs.libsodium
