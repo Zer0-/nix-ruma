@@ -4,4 +4,4 @@ cd $DIR
 nix-build --show-trace \
     --arg ruma_src ./ruma \
     --arg rust_nightly $(./build-rust-unstable.sh) \
-    default.nix -A ruma
+    default.nix -A build_ruma
