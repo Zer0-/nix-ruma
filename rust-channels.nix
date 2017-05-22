@@ -9,4 +9,5 @@ let
   rustpkgs = import ( builtins.toPath "${rust_overlay}/rust-overlay.nix" )
     nixpkgs  { lib = nixpkgs.lib; manifests = rust_manifests; }; 
 
-in rustpkgs.rustChannels
+in
+  nixpkgs.lib.filterAttrsRecursive (k: v: k != "rust-mingw") rustpkgs.rustChannels
